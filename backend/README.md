@@ -115,3 +115,97 @@ Register a new user in the system.
   ]
 }
 ```
+
+---
+
+## User Login Endpoint
+
+### POST /users/login
+
+Authenticate a user and receive a JWT token.
+
+#### Request Body
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+#### Validation Rules
+
+- Email must be a valid email address
+- Password is required
+
+#### Response
+
+**Success Response (200 OK)**
+
+```json
+{
+  "token": "JWT_TOKEN_STRING",
+  "user": {
+    "fullName": {
+      "firstName": "string",
+      "lastName": "string"
+    },
+    "email": "string",
+    "_id": "string"
+  }
+}
+```
+
+**Error Response (400 Bad Request or 401 Unauthorized)**
+
+```json
+{
+  "message": "Invalid Credentials"
+}
+```
+
+**Validation Error Example (400 Bad Request)**
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid email format",
+      "param": "email",
+      "location": "body",
+      "value": "invalid-email"
+    }
+  ]
+}
+```
+
+#### Status Codes
+
+- `200`: Successfully authenticated
+- `400`: Validation error or missing required fields
+- `401`: Invalid credentials
+
+#### Example Responses
+
+**Success Example**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "john@example.com",
+    "_id": "64c9e4f7c1234567890abcde"
+  }
+}
+```
+
+**Invalid Credentials Example**
+
+```json
+{
+  "message": "Invalid
+```
