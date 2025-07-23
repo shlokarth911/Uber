@@ -209,3 +209,79 @@ Authenticate a user and receive a JWT token.
 {
   "message": "Invalid
 ```
+
+---
+
+## User Profile Endpoint
+
+### GET /users/profile
+
+Retrieve the authenticated user's profile information.
+
+#### Authentication
+
+- Requires a valid JWT token in the `Authorization` header as `Bearer <token>` or in the `token` cookie.
+
+#### Response
+
+**Success Response (200 OK)**
+
+```json
+{
+  "_id": "64c9e4f7c1234567890abcde",
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "john@example.com"
+  // ...other user fields
+}
+```
+
+**Error Response (401 Unauthorized)**
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+#### Status Codes
+
+- `200`: Successfully retrieved user profile
+- `401`: Unauthorized or invalid/missing token
+
+---
+
+## User Logout Endpoint
+
+### GET /users/logout
+
+Logs out the authenticated user by blacklisting their JWT token.
+
+#### Authentication
+
+- Requires a valid JWT token in the `Authorization` header as `Bearer <token>` or in the `token` cookie.
+
+#### Response
+
+**Success Response (200 OK)**
+
+```json
+{
+  "message": "Logout Successfully"
+}
+```
+
+**Error Response (401 Unauthorized)**
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+#### Status Codes
+
+- `200`: Successfully logged out and token blacklisted
+- `401`: Unauthorized or invalid/missing
