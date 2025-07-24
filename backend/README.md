@@ -285,3 +285,109 @@ Logs out the authenticated user by blacklisting their JWT token.
 
 - `200`: Successfully logged out and token blacklisted
 - `401`: Unauthorized or invalid/missing
+
+---
+
+## Captain Registration Endpoint
+
+### POST /captains/register
+
+Register a new captain (driver) in the system.
+
+#### Request Body
+
+```json
+{
+  "fullName": {
+    "firstName": "string",
+    "lastName": "string"
+  },
+  "email": "string",
+  "password": "string",
+  "vehicle": {
+    "color": "string",
+    "plate": "string",
+    "capacity": 1,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Validation Rules
+
+- `email`: Must be a valid email address
+- `fullName.firstName`: Required
+- `password`: Must be at least 6 characters long
+- `vehicle.color`: Required
+- `vehicle.plate`: Required
+- `vehicle.capacity`: Must be an integer, at least 1
+- `vehicle.vehicleType`: Must be one of `car`, `motorcycle`, or `auto`
+
+#### Response
+
+**Success Response (201 Created)**
+
+```json
+{
+  "token": "JWT_TOKEN_STRING",
+  "captain": {
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "john@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "_id": "64c9e4f7c1234567890abcd1"
+  }
+}
+```
+
+**Error Response (400 Bad Request)**
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid Email",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+**Duplicate Email Error Example**
+
+```json
+{
+  "message": "Captain already exists"
+}
+```
+
+#### Status Codes
+
+- `201`: Successfully created captain
+- `400`: Validation error or missing/duplicate fields
+
+#### Example Request
+
+```bash
+curl -X POST http://localhost:3000/captains/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fullName": { "firstName": "John", "lastName": "Doe" },
+    "email": "john@example.com",
+    "password": "password123",
+    "vehicle": {
+      "color": "red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+        }
+  }'
+```
