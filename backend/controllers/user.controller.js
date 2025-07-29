@@ -19,6 +19,10 @@ module.exports.registerUser = async (req, res, next) => {
     return res.status(400).json({ message: "User already exists" });
   }
 
+  if (!fullName || !fullName.firstName) {
+    return res.status(400).json({ message: "First name is required" });
+  }
+
   const hashPassword = await userModel.hashPassword(password);
 
   const user = await userService.createUser({
