@@ -11,16 +11,17 @@ const Home = () => {
   const [pickUp, setPickUp] = useState("");
   const [destination, setDestination] = useState("");
   const [pannelOpen, setPannelOpen] = useState(false);
+  const [vehiclePannelOpen, setVehiclePannelOpen] = useState(false);
+  const [confirmRidePannel, setConfirmRidePannel] = useState(false);
+  const [vehicleFound, setVehicleFound] = useState(false);
+  const [waitingForDriver, setWaitingForDriver] = useState(false);
+
   const pannelRef = useRef(null);
   const pannelCloseRef = useRef(null);
   const vehiclePannelRef = useRef(null);
   const connfirmRidePannelRef = useRef(null);
   const vehicleFoundRef = useRef(null);
   const waitingForDriverRef = useRef(null);
-  const [vehiclePannelOpen, setVehiclePannelOpen] = useState(false);
-  const [confirmRidePannel, setConfirmRidePannel] = useState(false);
-  const [vehicleFound, setVehicleFound] = useState(false);
-  const [waitingForDriver, setWaitingForDriver] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -98,6 +99,7 @@ const Home = () => {
       });
     }
   }, [vehicleFound]);
+
   useGSAP(() => {
     if (waitingForDriver) {
       gsap.to(waitingForDriverRef.current, {

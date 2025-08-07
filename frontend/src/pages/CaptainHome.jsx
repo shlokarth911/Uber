@@ -1,7 +1,50 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import CaptainDetails from "../components/CaptainDetails";
+import RidePopUp from "../components/RidePopUp";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
 
 const CaptainHome = () => {
+  const [ridePopUpPannel, setRidePopUpPannel] = useState(true);
+  const [confirmRidePopUpPannel, setConfirmRidePopUpPannel] = useState(false);
+
+  const ridePopUpPannelRef = useRef(null);
+  const confirmRidePopUpPannelRef = useRef(null);
+
+  useGSAP(() => {
+    if (ridePopUpPannel) {
+      gsap.to(ridePopUpPannelRef.current, {
+        transform: "translateY(0)",
+        ease: "power4.out",
+        duration: 0.5,
+      });
+    } else {
+      gsap.to(ridePopUpPannelRef.current, {
+        transform: "translateY(100%)",
+        ease: "power4.out",
+        duration: 0.3,
+      });
+    }
+  }, [ridePopUpPannel]);
+
+  useGSAP(() => {
+    if (confirmRidePopUpPannel) {
+      gsap.to(confirmRidePopUpPannelRef.current, {
+        transform: "translateY(0)",
+        ease: "power4.out",
+        duration: 0.5,
+      });
+    } else {
+      gsap.to(confirmRidePopUpPannelRef.current, {
+        transform: "translateY(100%)",
+        ease: "power4.out",
+        duration: 0.3,
+      });
+    }
+  }, [confirmRidePopUpPannel]);
+
   return (
     <div className="h-screen">
       <div className="p-3 top-0 flex items-center justify-between fixed w-full">
@@ -19,45 +62,34 @@ const CaptainHome = () => {
         </Link>
       </div>
 
-      <div className="h-1/2">
+      <div className="h-full">
         <img
           src="https://www.medianama.com/wp-content/uploads/2018/06/Screenshot_20180619-112715.png.png"
           alt=""
           className="h-full w-full object-cover"
         />
       </div>
-      <div className=" h-1/2 p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center justify-start gap-2">
-            <img
-              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww"
-              alt=""
-              className="h-10 w-10 rounded-full object-cover"
-            />
-            <h4 className="text-lg font-medium">Harsh Patel</h4>
-          </div>
-          <div>
-            <h4 className="text-xl font-semibold">₹295.4</h4>
-            <p className="text-sm ">Earned</p>
-          </div>
-        </div>
-        <div className="flex justify-evenly p-4 bg-neutral-100 rounded-2xl">
-          <div className="text-center">
-            <i className="text-3xl mb-2  font-thin ri-time-line"></i>
-            <h5 className="text-lg font-medium">10.2</h5>
-            <p className="text-sm text-neutral-600">Hours Online</p>
-          </div>
-          <div className="text-center">
-            <i className="text-3xl mb-2  font-thin ri-speed-up-line"></i>
-            <h5 className="text-lg font-medium">10.2</h5>
-            <p className="text-sm text-neutral-600">Hours Online</p>
-          </div>
-          <div className="text-center">
-            <i className="text-3xl mb-2  font-thin ri-booklet-line"></i>
-            <h5 className="text-lg font-medium">10.2</h5>
-            <p className="text-sm text-neutral-600">Hours Online</p>
-          </div>
-        </div>
+      <div className=" fixed bottom-[0%] w-full p-4 bg-[#fff]">
+        <CaptainDetails />
+      </div>
+
+      <div
+        ref={ridePopUpPannelRef}
+        className="fixed z-10 bottom-0 translate-y-full bg-white w-full  rounded-t-2xl  px-3 py-4"
+      >
+        <RidePopUp
+          setRidePopUpPannel={setRidePopUpPannel}
+          setConfirmRidePopUpPannel={setConfirmRidePopUpPannel}
+        />
+      </div>
+      <div
+        ref={confirmRidePopUpPannelRef}
+        className="fixed h-screen z-10 bottom-0 translate-y-full bg-white w-full  rounded-t-2xl  px-3 py-4"
+      >
+        <ConfirmRidePopUp
+          setConfirmRidePopUpPannel={setConfirmRidePopUpPannel}
+          setRidePopUpPannel={setRidePopUpPannel}
+        />
       </div>
     </div>
   );
