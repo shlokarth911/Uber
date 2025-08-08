@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const ConfirmRidePopUp = (props) => {
-  const [otp, setOtp] = useState("");
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
-
+const FinishRide = (props) => {
   return (
     <>
       <div className="">
-        <h5 className="p-0 text-center w-full  relative top-0">
+        <h5
+          onClick={() => {
+            props.setFinishRidePannel(false);
+          }}
+          className="p-0 text-center w-full  relative top-0"
+        >
           <i className="ri-arrow-down-wide-line text-3xl text-neutral-500 "></i>
         </h5>
-        <h3 className="text-2xl font-semibold mb-5">
-          Confirm this ride to start
-        </h3>
+        <h3 className="text-2xl font-semibold mb-5">Finish this ride</h3>
 
         <div className="flex justify-between items-center pt-4 ">
           <div className="flex items-center gap-3 ">
@@ -64,42 +61,21 @@ const ConfirmRidePopUp = (props) => {
           </div>
         </div>
 
-        <form
-          onSubmit={(e) => {
-            submitHandler(e);
-          }}
-        >
-          <input
-            type="number"
-            placeholder="Enter OTP"
-            className="bg-[#eee] px-4 py-3 text-2xl rounded-lg w-full mt-4 mb-6"
-            onChange={(e) => {
-              setOtp(e.target.value);
-            }}
-            value={otp}
-          />
+        <div className="flex flex-col justify-between gap-3">
+          <Link
+            to="/captain-riding"
+            className="w-full flex justify-center items-center bg-neutral-900 font-semibold p-2 py-3 rounded-lg text-white text-xl"
+          >
+            Finish Ride
+          </Link>
 
-          <div className="flex justify-between gap-3">
-            <Link
-              to="/captain-riding"
-              className="w-full flex justify-center items-center bg-neutral-900 font-semibold p-2 py-3 rounded-lg text-white text-xl"
-            >
-              Confirm
-            </Link>
-            <button
-              onClick={() => {
-                props.setConfirmRidePopUpPannel(false);
-                props.setRidePopUpPannel(false);
-              }}
-              className="w-full bg-neutral-500 font-semibold p-2  py-3 rounded-lg text-white text-xl"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+          <p className="text-neutral-600 text-sm text-center">
+            Click on finish ride button if you have completed the payment
+          </p>
+        </div>
       </div>
     </>
   );
 };
 
-export default ConfirmRidePopUp;
+export default FinishRide;
